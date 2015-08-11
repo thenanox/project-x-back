@@ -3,32 +3,22 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+var	thinky = require('../utils/thinky'),
+	type = thinky.type,
+	r = thinky.r,
+	User = require('./user.server.model.js');
 
 /**
  * Article Schema
  */
-var ArticleSchema = new Schema({
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	title: {
-		type: String,
-		default: '',
-		trim: true,
-		required: 'Title cannot be blank'
-	},
-	content: {
-		type: String,
-		default: '',
-		trim: true
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	}
-});
+var Article = thinky.createModel('Article', {
+	created: type.date().default(r.now),
+	title: type.string(),
+	content: type.string(),
+	userId: type.string(),
+},{init:true});
 
-mongoose.model('Article', ArticleSchema);
+User.hasMany(Article, 'article', 'id', 'userId');
+Article.belongsTo(User, 'user', 'userid', 'id');
+
+module.exports = Article;

@@ -3,9 +3,8 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-	errorHandler = require('./errors.server.controller'),
-	Article = mongoose.model('Article'),
+var errorHandler = require('./errors.server.controller'),
+	Article = require('../models/article.server.model.js'),
 	_ = require('lodash');
 
 /**
@@ -15,7 +14,7 @@ exports.create = function(req, res) {
 	var article = new Article(req.body);
 	article.user = req.user;
 
-	article.save(function(err) {
+	article.saveAll(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -41,7 +40,7 @@ exports.update = function(req, res) {
 
 	article = _.extend(article, req.body);
 
-	article.save(function(err) {
+	article.saveAll(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -58,7 +57,7 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 	var article = req.article;
 
-	article.remove(function(err) {
+	article.delete(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -73,7 +72,7 @@ exports.delete = function(req, res) {
  * List of Articles
  */
 exports.list = function(req, res) {
-	Article.find().sort('-created').populate('user', 'displayName').exec(function(err, articles) {
+	Article.get().sort('-created').populate('user', 'displayName').exec(function(err, articles) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -88,7 +87,7 @@ exports.list = function(req, res) {
  * Article middleware
  */
 exports.articleByID = function(req, res, next, id) {
-	Article.findById(id).populate('user', 'displayName').exec(function(err, article) {
+	Article.get(id).populate('user', 'displayName').exec(function(err, article) {
 		if (err) return next(err);
 		if (!article) return next(new Error('Failed to load article ' + id));
 		req.article = article;

@@ -4,8 +4,7 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
-	mongoose = require('mongoose'),
-	User = mongoose.model('User');
+	User = require('../../models/user.server.model.js');
 
 /**
  * User middleware

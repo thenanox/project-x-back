@@ -5,9 +5,8 @@
  */
 var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller.js'),
-	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = require('../../models/user.server.model.js');
 
 /**
  * Update user details
