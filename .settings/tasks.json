@@ -1,6 +1,6 @@
 {
     "version": "0.1.0",
-    "command": "gulp", // "grunt",
+    "command": "grunt", // "grunt",
     "isShellCommand": true,
     "showOutput": "silent",
     "args": [],
