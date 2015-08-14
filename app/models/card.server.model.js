@@ -3,27 +3,21 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+var	thinky = require('../utils/thinky'),
+	type = thinky.type,
+	r = thinky.r;
 
 /**
  * Card Schema
  */
-var CardSchema = new Schema({
-	name: {
-		type: String,
-		default: '',
-		required: 'Please fill Card name',
-		trim: true
-	},
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	}
+var Card = thinky.createModel('cards', {
+	time: type.date().default(r.now),
+	waitlist: type.number(),
+	platform: type.string(),
+	slots: type.number(),
+	creator: type.string(),
+	description: type.string(),
+	game: type.string()
 });
 
-mongoose.model('Card', CardSchema);
+module.exports = Card;
