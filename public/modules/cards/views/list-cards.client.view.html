@@ -6,11 +6,18 @@
         <a data-ng-repeat="card in cards" data-ng-href="#!/cards/{{card._id}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
-				<span data-ng-bind="card.created | date:'medium'"></span>
+				<span data-ng-bind="card.time | date:'medium'"></span>
 				by
-				<span data-ng-bind="card.user.displayName"></span>
+				<span data-ng-bind="card.creator"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="card.name"></h4>
+			<h4 class="list-group-item-heading" data-ng-bind="card.game"></h4>
+			<h5 class="list-group-item-heading" data-ng-bind="card.platform"></h5>
+            <p data-ng-bind="card.description"></p>
+            <small class="list-group-item-text">
+				Slots left
+				<span data-ng-bind="card.slots"></span>
+				(<span data-ng-bind="card.waitlist"></span> waiting...)
+			</small>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!cards.$resolved || cards.length">
