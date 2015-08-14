@@ -9,12 +9,12 @@ angular.module('cards').controller('CardsController', ['$scope', '$stateParams',
 		$scope.create = function() {
 			// Create new Card object
 			var card = new Cards ({
-				waitlist: 123,
-				platform: 'PC',
-				slots: 2,
-				creator: 'John Doe',
-				description: this.name,
-				game: this.name
+				creator: this.creator,
+				game: this.game,
+				description: this.description,
+				platform: this.platform,
+				slots: this.slots,
+				waitlist: 0
 			});
 
 			// Redirect after save
