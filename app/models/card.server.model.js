@@ -10,7 +10,7 @@ var	thinky = require('../utils/thinky'),
 /**
  * Card Schema
  */
-var Card = thinky.createModel('cards', {
+var Card = thinky.createModel('Card', {
 	time: type.date().default(r.now),
 	waitlist: type.number(),
 	platform: type.string(),
@@ -18,6 +18,6 @@ var Card = thinky.createModel('cards', {
 	creator: type.string(),
 	description: type.string(),
 	game: type.string()
-});
+},{init:true});
 
 module.exports = Card;

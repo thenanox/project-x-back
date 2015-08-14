@@ -12,8 +12,6 @@ var errorHandler = require('./errors.server.controller'),
  */
 exports.create = function(req, res) {
 	var card = new Card(req.body);
-	card.user = req.user;
-
 	card.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -72,14 +70,8 @@ exports.delete = function(req, res) {
  * List of Cards
  */
 exports.list = function(req, res) { 
-	Card.find().sort('-created').populate('user', 'displayName').exec(function(err, cards) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
+	Card.run().then(function(cards) {
 			res.jsonp(cards);
-		}
 	});
 };
 
